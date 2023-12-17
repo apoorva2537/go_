@@ -13,7 +13,7 @@ var collection *mongo.Collection
 
 func setup() {
 	// Set up MongoDB connection
-	clientOptions := options.Client().ApplyURI("mongodb+srv://ANKIT:ANKIT123@go-project.s1rwtd6.mongodb.net/")
+	clientOptions := options.Client().ApplyURI("mongodb+srv://apoorva1937:Apoorva123@goproject.zzhjzuy.mongodb.net/")
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
@@ -29,5 +29,5 @@ func setup() {
 
 	// Set the collection variable
 	database := client.Database("test")
-	collection = database.Collection("people")
+	collection = database.Collection("Users")
 }
