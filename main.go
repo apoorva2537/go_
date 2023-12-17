@@ -9,15 +9,14 @@ import (
 )
 
 func main() {
+	setup()
 	// Initialize router
 	router := mux.NewRouter()
-
-	// Define CRUD endpoints
-	router.HandleFunc("/people", CreatePerson).Methods("POST")
-	router.HandleFunc("/people", GetPeople).Methods("GET")
-	router.HandleFunc("/people/{id}", GetPerson).Methods("GET")
-	router.HandleFunc("/people/{id}", UpdatePerson).Methods("PUT")
-	router.HandleFunc("/people/{id}", DeletePerson).Methods("DELETE")
+	router.HandleFunc("/createUser", CreatePerson).Methods("POST")
+	router.HandleFunc("/getUsers", GetPeople).Methods("GET")
+	router.HandleFunc("/getUser/{id}", GetPerson).Methods("GET")
+	router.HandleFunc("/updateUser/{id}", UpdatePerson).Methods("PUT")
+	router.HandleFunc("/deleteUser/{id}", DeletePerson).Methods("DELETE")
 
 	// Set up and start the server
 	port := ":8080"
