@@ -2,33 +2,25 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"net/http"
 
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/gorilla/mux"
 )
 
-type Person struct {
-	Name string
-	Age  int
-	City string
-}
-
 func main() {
-	// Example usage
-	setupDB()
-	insertedID := InsertPerson(Person{"John Doe", 30, "New York"})
-	fmt.Println("Inserted document with ID:", insertedID)
+	// Initialize router
+	router := mux.NewRouter()
 
-	// Find document
-	filter := bson.D{{"name", "John Doe"}}
-	foundPerson := FindPerson(filter)
-	fmt.Printf("Found document: %+v\n", foundPerson)
+	// Define CRUD endpoints
+	router.HandleFunc("/people", CreatePerson).Methods("POST")
+	router.HandleFunc("/people", GetPeople).Methods("GET")
+	router.HandleFunc("/people/{id}", GetPerson).Methods("GET")
+	router.HandleFunc("/people/{id}", UpdatePerson).Methods("PUT")
+	router.HandleFunc("/people/{id}", DeletePerson).Methods("DELETE")
 
-	// Update document
-	update := bson.D{{"$set", bson.D{{"age", 31},{"name", "Ankit Gupta"}}}}
-	modifiedCount := UpdatePerson(filter, update)
-	fmt.Printf("Modified %v document(s)\n", modifiedCount)
-
-	// Delete document
-	// deletedCount := DeletePerson(filter)
-	// fmt.Printf("Deleted %v document(s)\n", deletedCount)
+	// Set up and start the server
+	port := ":8080"
+	fmt.Printf("Server is running on port %s\n", port)
+	log.Fatal(http.ListenAndServe(port, router))
 }
